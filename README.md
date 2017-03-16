@@ -1,6 +1,6 @@
 # \<nha-video-viewer-interface>
 
-The Web Component nha-video-viewer-interface provides...
+The Web Component nha-video-viewer-interface provides a video viewer.
 
 ## Install the Polymer-CLI
 
