@@ -1,0 +1,167 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!-- style references -->
+<link rel="import" href="./src/style/style.html">
+
+<!--
+The Web Component `nha-video-viewer-interface` provides a video viewer.
+
+In typical use, just include the following link in your `<head>` section...
+
+    <head>
+		  <link
+		    rel="import"
+		    href="/bower_components/nha_video_viewer_interface/nha-video-viewer-interface.html">
+				 ...
+
+... and the component in your `<body>` section:
+
+    <body>
+		  <nha-video-viewer-interface
+		    user_id="..."
+		    nodejs_url="..."
+		    component_name="..."
+		    component_alias="..."
+		    component_instance="..."></nha-video-viewer-interface>
+				 ...
+
+@demo demo/index.html
+-->
+
+<dom-module id="nha-video-viewer-interface">
+	<template>
+		<!-- style references -->
+		<style include="nha-video-viewer-interface-style"></style>
+
+		<div id="initiatedScreen">
+			<img width="16" height="16" src="data:image/gif;base64,R0lGODlhEAAQAPQAAP///2NjY/r6+oWFhbOzs2ZmZnp6euXl5cnJyXBwcKurq6Ghoe7u7r+/v9vb246OjpeXlwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFUCAgjmRpnqUwFGwhKoRgqq2YFMaRGjWA8AbZiIBbjQQ8AmmFUJEQhQGJhaKOrCksgEla+KIkYvC6SJKQOISoNSYdeIk1ayA8ExTyeR3F749CACH5BAkKAAAALAAAAAAQABAAAAVoICCKR9KMaCoaxeCoqEAkRX3AwMHWxQIIjJSAZWgUEgzBwCBAEQpMwIDwY1FHgwJCtOW2UDWYIDyqNVVkUbYr6CK+o2eUMKgWrqKhj0FrEM8jQQALPFA3MAc8CQSAMA5ZBjgqDQmHIyEAIfkECQoAAAAsAAAAABAAEAAABWAgII4j85Ao2hRIKgrEUBQJLaSHMe8zgQo6Q8sxS7RIhILhBkgumCTZsXkACBC+0cwF2GoLLoFXREDcDlkAojBICRaFLDCOQtQKjmsQSubtDFU/NXcDBHwkaw1cKQ8MiyEAIfkECQoAAAAsAAAAABAAEAAABVIgII5kaZ6AIJQCMRTFQKiDQx4GrBfGa4uCnAEhQuRgPwCBtwK+kCNFgjh6QlFYgGO7baJ2CxIioSDpwqNggWCGDVVGphly3BkOpXDrKfNm/4AhACH5BAkKAAAALAAAAAAQABAAAAVgICCOZGmeqEAMRTEQwskYbV0Yx7kYSIzQhtgoBxCKBDQCIOcoLBimRiFhSABYU5gIgW01pLUBYkRItAYAqrlhYiwKjiWAcDMWY8QjsCf4DewiBzQ2N1AmKlgvgCiMjSQhACH5BAkKAAAALAAAAAAQABAAAAVfICCOZGmeqEgUxUAIpkA0AMKyxkEiSZEIsJqhYAg+boUFSTAkiBiNHks3sg1ILAfBiS10gyqCg0UaFBCkwy3RYKiIYMAC+RAxiQgYsJdAjw5DN2gILzEEZgVcKYuMJiEAOwAAAAAAAAAAAA==" />
+		</div>
+		<div id="activeScreen">
+			<video id="videoViewer" controls="true">
+				<source type="" src="">
+				Your browser does not support HTML5 video tag.
+			</video><br/>
+		</div>
+	</template>
+
+
+
+	<script src="./src/component.js"></script>
+	<script src="./src/content/core/core.js"></script>
+	<script src="./src/content/interaction/interaction.js"></script>
+	<script src="./src/interface/controller/connection.js"></script>
+	<script src="./src/interface/controller/input.js"></script>
+	<script src="./src/interface/controller/output.js"></script>
+	<script src="./src/interface/interaction/interaction.js"></script>
+
+	<script>
+		Polymer(
+		{
+			is: 'nha-video-viewer-interface',
+
+			properties:
+			{
+				/**
+				 * Identifier of the user who is interacting with the application.
+				 * 
+				 * For instance: `"1"`.
+				 */
+				user_id:
+				{
+					type: String,
+				},
+
+
+				/**
+				 * Address of the JavaScript server of the infrastructure which manages the communications.
+				 * 
+				 * For instance: `"http://..."`.
+				 */
+				nodejs_url:
+				{
+					type: String,
+				},
+
+
+				/**
+				 * Type of the component.
+				 * 
+				 * For instance: `"nha-video-viewer-interface"`.
+				 */
+				component_name:
+				{
+					type: String,
+				},
+
+
+				/**
+				 * Descriptive name to differentiate components of the same type.
+				 * 
+				 * For instance: `"nha-video-viewer-interface_01"`.
+				 */
+				component_alias:
+				{
+					type: String,
+				},
+
+
+				/**
+				 * Unique identifier of the component instantiation.
+				 * 
+				 * For instance: `"0001"`.
+				 */
+				component_instance:
+				{
+					type: String,
+				}
+			},
+
+
+
+			/**
+			 * @event PI.setVideo
+			 * 
+			 * @param {-} source: video file or base64 video enconding.
+			 * 
+			 * @param {-} base64: to indicate if "source" parameter is video file or base64 video enconding.
+			 * 
+			 * @param {-} type: video type ('video/mp4', 'video/webm', or 'video/ogg').
+			 * 
+			 * @param {-} autoplay: to start or not the video automatically.
+			 * 
+			 * @param {-} controls: to add or not the video controls (play, pause, volume, etc.).
+			 */
+
+
+
+			created: function()
+			{
+				// function implementation
+				var _myComponent = this;
+
+
+
+				nha_video_viewer_interface.beforeInit(_myComponent, []);
+			},
+
+
+
+			ready: function()
+			{
+				// function implementation
+				var _myComponent = this;
+
+
+
+				_myComponent.init(_myComponent, []);
+				_myComponent.connect(_myComponent, []);
+			}
+		});
+	</script>
+
+
+
+	<!-- script references -->
+	<script src="http://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<!-- ... -->
+</dom-module>
